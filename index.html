@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz 21 de Septiembre 🌻</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fffef0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 15px;
+      color: #5a4a21;
+      overflow-x: hidden;
+    }
+
+    /* Fondo animado de luz */
+    .bg-glow {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 235, 59, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .main-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 500px;
+      background: #ffffff;
+      border: 3px solid #fbc02d;
+      border-radius: 28px;
+      padding: 25px 18px;
+      box-shadow: 0 12px 30px rgba(251, 192, 45, 0.25);
+      text-align: center;
+    }
+
+    /* Título principal */
+    .header-title {
+      font-size: 1.9rem;
+      color: #f57f17;
+      font-weight: 800;
+      margin-bottom: 6px;
+      text-shadow: 1px 1px 0px #fffde7;
+    }
+
+    .header-subtitle {
+      font-size: 1.05rem;
+      color: #fbc02d;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* Ilustración / Foto de la pareja */
+    .photo-box {
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 18px auto;
+      background: #fffde7;
+      border: 4px solid #fdd835;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(253, 216, 53, 0.35);
+      overflow: hidden;
+      transform: rotate(-2deg);
+      transition: transform 0.3s ease;
+    }
+
+    .photo-box:hover {
+      transform: rotate(0deg) scale(1.03);
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Texto personalizado del medio */
+    .intro-text {
+      font-size: 0.98rem;
+      line-height: 1.5;
+      color: #795548;
+      background: #fffde7;
+      padding: 14px 16px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      border: 1px solid #fff59d;
+    }
+
+    /* Grid de las 4 Cartas */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 15px;
+    }
+
+    /* Diseño estilo Sobre de Carta real */
+    .envelope-card {
+      position: relative;
+      background: #fff9c4;
+      border: 2px solid #fbc02d;
+      border-radius: 14px;
+      padding: 22px 10px 14px 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 6px 14px rgba(251, 192, 45, 0.2);
+      overflow: hidden;
+    }
+
+    /* Solapa del sobre */
+    .envelope-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-top: 35px solid #fff176;
+      z-index: 1;
+    }
+
+    .envelope-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(251, 192, 45, 0.35);
+    }
+
+    .envelope-card:active {
+      transform: scale(0.95);
+    }
+
+    .envelope-icon {
+      font-size: 1.8rem;
+      margin-top: 8px;
+      margin-bottom: 6px;
+      z-index: 2;
+    }
+
+    .envelope-tag {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #e65100;
+      z-index: 2;
+      line-height: 1.2;
+    }
+
+    /* Modal / Pantalla desplegable de las cartas */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border: 3px solid #fbc02d;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 420px;
+      padding: 25px 20px;
+      text-align: center;
+      position: relative;
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      color: #f57f17;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .modal-body {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #5d4037;
+      margin-bottom: 20px;
+      white-space: pre-line;
+    }
+
+    .btn-close {
+      background: #fbc02d;
+      color: #ffffff;
+      border: none;
+      padding: 10px 24px;
+      font-weight: bold;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(251, 192, 45, 0.4);
+    }
+
+    /* Capa para las animaciones mágicas flotantes */
+    .fx-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    .fx-item {
+      position: absolute;
+      user-select: none;
+      animation: floatUp 2.5s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.5) rotate(0deg);
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-120px) scale(1.3) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+  <div class="fx-layer" id="fxLayer"></div>
+
+  <div class="main-card">
+    <h1 class="header-title">Feliz 21 de septiembre, mi amor 🌻</h1>
+    <p class="header-subtitle">Llegó el día de las flores amarillas ✨</p>
+
+    <!-- Marco de foto con la imagen incrustada -->
+    <div class="photo-box">
+      <img src="foto_pareja.jpg" alt="Nuestra Foto">
+    </div>
+
+    <!-- Tu mensaje personalizado en la medalla del medio -->
+    <div class="intro-text">
+      Hola mi amor, yo sé que no es lo mejor que puedo darte en el día de hoy, pero mañana prometo traerte un regalo más lindo que el de ahora, ¿sí mi amor? Esto solo es porque no importa la distancia en la que estés, siempre voy a esforzarme en pensar en vos &lt;3
+    </div>
+
+    <div class="cards-grid">
+      <div class="envelope-card" onclick="openCard(1)">
+        <span class="envelope-icon">🌻</span>
+        <span class="envelope-tag">Para mi 21 de septiembre</span>
+      </div>
+
+      <div class="envelope-card" onclick="openCard(2)">
+        <span class="envelope-icon">✨</span>
+        <span class="envelope-tag">Un pedacito de cielo</span>
+      </div>
+
+      <div class="envelope-card" onclick="openCard(3)">
+        <span class="envelope-icon">💛</span>
+        <span class="envelope-tag">Lo que me hacés sentir</span>
+      </div>
+
+      <div class="envelope-card" onclick="openCard(4)">
+        <span class="envelope-icon">🌼</span>
+        <span class="envelope-tag">Mi deseo siempre</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ventana desplegable (Modal) -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+      <div class="modal-title" id="modalTitle">Título</div>
+      <div class="modal-body" id="modalBody">Mensaje...</div>
+      <button class="btn-close" onclick="closeCard()">Cerrar 💛</button>
+    </div>
+  </div>
+
+  <script>
+    const messages = {
+      1: {
+        title: "🌻 Para empezar el día...",
+        text: "muchisimas Gracias principalmente por ser voz mi 21 de septiembre y ninguna otra mujer en este mundo<3.",
+        fx: ['🌻', '🌻', '💛', '🌻', '✨']
+      },
+      2: {
+        title: "✨ Un ratito con vos",
+        text: "estar con voz se siente como estar en cielo mi amolchita<3.",
+        fx: ['✨', '⭐', '🌟', '✨', '💛']
+      },
+      3: {
+        title: "lo que me hacés sentir<3",
+        text: "esa forma de amarme tan hermosa aveses sinceramente la amo tanto mi amor , gracias por darme todo <3.",
+        fx: ['💛', '💛', '💛', '🌻', '✨']
+      },
+      4: {
+        title: "🌼 Mi deseo de primavera",
+        text: "deseo tanto mi amor que esta y todas los 21 se septiembre seas voz la elejida para estar conmigo<3",
+        fx: ['🌼', '🌻', '✨', '🌼', '💛']
+      }
+    };
+
+    const fxLayer = document.getElementById('fxLayer');
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      triggerAnimation(['🌻', '🌼', '✨', '💛'], 15);
+    });
+
+    function openCard(id) {
+      const data = messages[id];
+      document.getElementById('modalTitle').innerText = data.title;
+      document.getElementById('modalBody').innerText = data.text;
+      modalOverlay.style.display = 'flex';
+
+      triggerAnimation(data.fx, 20);
+    }
+
+    function closeCard() {
+      modalOverlay.style.display = 'none';
+    }
+
+    function triggerAnimation(symbols, amount) {
+      for (let i = 0; i < amount; i++) {
+        setTimeout(() => {
+          const item = document.createElement('div');
+          item.classList.add('fx-item');
+          item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+          
+          item.style.left = Math.random() * 85 + 5 + 'vw';
+          item.style.top = Math.random() * 50 + 40 + 'vh';
+          item.style.fontSize = Math.random() * 20 + 22 + 'px';
+          
+          fxLayer.appendChild(item);
+
+          setTimeout(() => item.remove(), 2500);
+        }, i * 80);
+      }
+    }
+  </script>
+</body>
+</html>
